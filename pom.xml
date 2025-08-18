@@ -11,7 +11,7 @@
     <groupId>ru.vtb</groupId>
     <artifactId>javapro</artifactId>
     <version>0.1.0-SNAPSHOT</version>
-    <name>ds-red-adapter</name>
+    <name>javaPro</name>
     <description>Проект для ДЗ по javaPro</description>
 
     <properties>
@@ -98,6 +98,18 @@
                     <skipTests>false</skipTests>
                     <argLine>${surefireArgLine}</argLine>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-build-plugin</artifactId>
+                <version>1.13</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>readme-md</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
