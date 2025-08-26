@@ -63,9 +63,12 @@ public class Lesson2 {
     public Integer four(List<Integer> list, Integer pos) {
         if (list.size() < pos-1) {
             log.info("размер массива меньше позиции");
+            return 0;
         }
         return list.stream()
-                .sorted(Comparator.reverseOrder()).toList().get(pos-1);
+                .sorted(Comparator.reverseOrder())
+                .toList()
+                .get(pos-1);
     }
 
     /**
