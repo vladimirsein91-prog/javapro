@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Log4j2
 public class MyThreadPool {
-    private final LinkedBlockingQueue<Runnable> taskQueue;
+    private final LinkedList<Runnable> taskQueue;
     private final WorkerThread[] workers;
     private final AtomicBoolean isShutdown;
 
@@ -27,7 +27,7 @@ public class MyThreadPool {
             throw new IllegalArgumentException("Capacity должен быть больше 0");
         }
 
-        this.taskQueue = new LinkedBlockingQueue<>();
+        this.taskQueue = new LinkedList<>();
         ; // очередь исполнения
         this.workers = new WorkerThread[capacity];  // массив потоков
         this.isShutdown = new AtomicBoolean(false);
@@ -47,7 +47,9 @@ public class MyThreadPool {
             throw new IllegalStateException("Пул нахоится в стадии завершения, задачи не принимаются");
         }
         taskCount.incrementAndGet();
-        taskQueue.put(task);
+        synchronized (taskQueue) {
+            taskQueue.add(task);
+        }
     }
 
     public void shutdown() {
@@ -78,18 +80,20 @@ public class MyThreadPool {
         public void run() {
             Runnable task;
             while (true) {
-                task = taskQueue.poll();
-                if (isShutdown.get() && task == null) {
-                    break;
+                synchronized (taskQueue) {
+                    task = taskQueue.poll();
                 }
-                try {
-                    if (task != null && !Thread.interrupted()) {
-                        task.run();
-                        taskCount.decrementAndGet();
+                    if (isShutdown.get() && task == null) {
+                        break;
                     }
-                } catch (Exception e) {
-                    log.error("произошла ошибка ", e);
-                }
+                    try {
+                        if (task != null && !Thread.interrupted()) {
+                            task.run();
+                            taskCount.decrementAndGet();
+                        }
+                    } catch (Exception e) {
+                        log.error("произошла ошибка ", e);
+                    }
             }
         }
     }
