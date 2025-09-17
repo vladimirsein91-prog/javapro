@@ -1,9 +1,9 @@
 package ru.vtb.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
-import java.util.UUID;
+import lombok.ToString;
 
 @Entity
 @Table(name = "users")
@@ -15,5 +15,11 @@ public class UserEntity {
 
     @Column(name="user_name")
     private String userName;
+
+    @NotNull
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "department_id", nullable = false)
+    private Department department;
 
 }

@@ -23,7 +23,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(Long id) {
-        return mapper.map(userDao.findById(id).get());
+        return mapper.map(userDao.findById(id.intValue()).get());
+    }
+
+    @Override
+    public List<User> getAllusersByDepartament(Long id) {
+        return mapper.map(userDao.findByDepartment(id.intValue()));
     }
 
     @Override

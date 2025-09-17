@@ -10,6 +10,7 @@ public interface UserService {
 
     User getUser(Long id);
 
+    List<User> getAllusersByDepartament(Long id);
     Long saveUser(User user);
 
     void removeUser(Long id);
