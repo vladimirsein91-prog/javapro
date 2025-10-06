@@ -17,6 +17,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Slf4j
 public class JavaPro {
 
+@SpringBootApplication
+@EnableJpaRepositories
+@Slf4j
+@EnableConfigurationProperties
+public class JavaPro {
 
     public static void main(String[] args) {
         //   SpringApplication.run(JavaPro.class, args);

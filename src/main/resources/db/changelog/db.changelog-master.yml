@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - preConditions:
+      - dbms:
+          type: postgresql
+  - include:
+      file: db/changelog/v0.1.0/db.changelog-v.1.0.sql
+  - include:
+      file: db/changelog/v0.1.0/db.changelog-v.1.1.sql
