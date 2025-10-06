@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 
 @Configuration
-//@PropertySource("classpath:application-local.yml")
-@PropertySource(value={"classpath:application-local.yml"})
 public class HikaryPoolConfig {
 
 
